@@ -1,0 +1,27 @@
+# Веб-фреймворк и сервер
+fastapi
+uvicorn[standard]
+
+# Шаблоны и формы
+jinja2
+python-multipart
+
+# Сессии
+itsdangerous
+
+# База данных
+sqlalchemy
+
+# Пароли
+bcrypt
+
+# Модель
+pandas
+numpy
+scikit-learn
+
+# Графики
+plotly
+
+# Тесты
+pytest
