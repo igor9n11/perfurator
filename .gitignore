@@ -1,0 +1,23 @@
+# Виртуальное окружение
+.venv/
+venv/
+
+# Кэш Python
+__pycache__/
+*.pyc
+
+# База данных SQLite
+*.csv
+*.db
+*.sqlite3
+
+# Переменные окружения
+.env
+
+# Файлы IDE
+.vscode/
+.idea/
+
+# Прочее
+.pytest_cache/
+*.log

@@ -4,12 +4,12 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from app import models  # noqa: F401 — без импорта create_all не увидит таблицы
 from app.db import create_tables
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Код до yield выполняется один раз при старте приложения
     create_tables()
     yield
 

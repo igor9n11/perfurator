@@ -1,21 +1,26 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from app.config import DATABASE_URL
 
-# check_same_thread=False нужен для SQLite: FastAPI обрабатывает запросы
-# в разных потоках, а по умолчанию SQLite это запрещает.
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+
+
+@event.listens_for(engine, "connect")
+def enable_foreign_keys(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
+
 
 SessionLocal = sessionmaker(bind=engine)
 
 
 class Base(DeclarativeBase):
-    """Базовый класс для всех моделей в models.py."""
+    pass
 
 
 def get_db():
-    """Зависимость FastAPI: открывает сессию БД на время запроса и закрывает после."""
     db = SessionLocal()
     try:
         yield db
@@ -24,5 +29,4 @@ def get_db():
 
 
 def create_tables():
-    """Создаёт таблицы для всех моделей, если их ещё нет."""
     Base.metadata.create_all(bind=engine)

@@ -25,3 +25,4 @@ plotly
 
 # Тесты
 pytest
+httpx2
