@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% set gender_labels = {"women": "женский", "men": "мужской", "unisex": "унисекс"} %}
+
+{% block title %}Каталог — Perfume Rater{% endblock %}
+
+{% block content %}
+    <h2>Каталог</h2>
+    <p>Всего ароматов: {{ total }}</p>
+
+    <table class="catalog">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Бренд</th>
+                <th>Пол</th>
+                <th>Год</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in items %}
+                <tr>
+                    <td>{{ f.name }}</td>
+                    <td>{{ f.brand }}</td>
+                    <td>{{ gender_labels[f.gender] }}</td>
+                    <td>{{ f.year or "—" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav class="pagination">
+        {% if page > 1 %}
+            <a href="/catalog?page={{ page - 1 }}">← Назад</a>
+        {% endif %}
+        <span>Страница {{ page }} из {{ pages }}</span>
+        {% if page < pages %}
+            <a href="/catalog?page={{ page + 1 }}">Вперёд →</a>
+        {% endif %}
+    </nav>
+{% endblock %}
